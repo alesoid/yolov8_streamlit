@@ -2,53 +2,57 @@
 from pathlib import Path
 import PIL
 
-# External packages
+# Сторонние библиотеки
 import streamlit as st
 
-# Local Modules
+# Локальные модули
 import settings
 import helper
 
-# Setting page layout
+# Настройка макета страницы
 st.set_page_config(
     page_title="Object Detection using YOLOv8",
-    page_icon="🤖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Main page heading
+# Наименование
 st.title("Object Detection using YOLOv8")
 
-# Sidebar
+# Меню
 st.sidebar.header("ML Model Config")
 
-# Model Options
-model_type = st.sidebar.radio(
-    "Select Task", ['Detection', 'Segmentation'])
+# Опции (будут активированы по мере добавления моделей)??
+# model_type = st.sidebar.radio(
+#     "Select Task", ['Detection', 'Segmentation'])
 
+# Порог детекции 
 confidence = float(st.sidebar.slider(
     "Select Model Confidence", 25, 100, 40)) / 100
 
 # Selecting Detection Or Segmentation
-if model_type == 'Detection':
-    model_path = Path(settings.DETECTION_MODEL)
-elif model_type == 'Segmentation':
-    model_path = Path(settings.SEGMENTATION_MODEL)
+# if model_type == 'Detection':
+#     model_path = Path(settings.DETECTION_MODEL)
+# elif model_type == 'Segmentation':
+#     model_path = Path(settings.SEGMENTATION_MODEL)
 
-# Load Pre-trained ML Model
+# Загрузка предобученной модели
 try:
     model = helper.load_model(model_path)
 except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
 
+
+# выбор единицы контента: изображения/видео 
 st.sidebar.header("Image/Video Config")
 source_radio = st.sidebar.radio(
     "Select Source", settings.SOURCES_LIST)
 
 source_img = None
-# If image is selected
+
+# Если выбрано изображение
+
 if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
         "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
@@ -80,8 +84,7 @@ if source_radio == settings.IMAGE:
         else:
             if st.sidebar.button('Detect Objects'):
                 res = model.predict(uploaded_image,
-                                    conf=confidence
-                                    )
+                                    conf=confidence)
                 boxes = res[0].boxes
                 res_plotted = res[0].plot()[:, :, ::-1]
                 st.image(res_plotted, caption='Detected Image',
@@ -97,14 +100,14 @@ if source_radio == settings.IMAGE:
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)
 
-elif source_radio == settings.WEBCAM:
-    helper.play_webcam(confidence, model)
+# elif source_radio == settings.WEBCAM:
+#     helper.play_webcam(confidence, model)
 
-elif source_radio == settings.RTSP:
-    helper.play_rtsp_stream(confidence, model)
+# elif source_radio == settings.RTSP:
+#     helper.play_rtsp_stream(confidence, model)
 
-elif source_radio == settings.YOUTUBE:
-    helper.play_youtube_video(confidence, model)
+# elif source_radio == settings.YOUTUBE:
+#     helper.play_youtube_video(confidence, model)
 
 else:
     st.error("Please select a valid source type!")
