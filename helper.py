@@ -107,3 +107,16 @@ def play_stored_video(conf, model):
                     break
         except Exception as e:
             st.sidebar.error("Error loading video: " + str(e))
+
+
+def tags_from_yolo(results):
+    for result in results:
+        boxes = result.boxes  # Boxes object for bbox outputs
+        classes = result.names
+    
+    detected_classes_num = boxes.cls.unique().tolist()
+    print(detected_classes_num)
+    classes_det = []
+    for i in detected_classes:
+        classes_det.append(classes[i])
+    print(classes_det)
