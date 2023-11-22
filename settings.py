@@ -17,11 +17,8 @@ ROOT = root_path.relative_to(Path.cwd())
 # Sources
 IMAGE = 'Image'
 VIDEO = 'Video'
-WEBCAM = 'Webcam'
-RTSP = 'RTSP'
-YOUTUBE = 'YouTube'
 
-SOURCES_LIST = [IMAGE, VIDEO, WEBCAM, RTSP, YOUTUBE]
+SOURCES_LIST = [IMAGE, VIDEO]
 
 # Images config
 IMAGES_DIR = ROOT / 'images'
@@ -43,6 +40,3 @@ VIDEOS_DICT = {
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'yolov8n.pt'
 SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
-
-# Webcam
-WEBCAM_PATH = 0
