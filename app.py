@@ -11,16 +11,16 @@ import helper
 
 # Настройка макета страницы
 st.set_page_config(
-    page_title="Object Detection using YOLOv8",
+    page_title="Object Detection с использованием YOLOv8",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
 # Наименование
-st.title("Object Detection using YOLOv8")
+st.title("Object Detection с использованием YOLOv8")
 
 # Меню
-st.sidebar.header("ML Model Config")
+st.sidebar.header("Конфигурация")
 
 # Опции (будут активированы по мере добавления моделей)??
 # model_type = st.sidebar.radio(
@@ -47,7 +47,7 @@ except Exception as ex:
 
 
 # выбор единицы контента: изображения/видео 
-st.sidebar.header("Image/Video Config")
+st.sidebar.header("Выбор единицы контента")
 source_radio = st.sidebar.radio(
     "Select Source", settings.SOURCES_LIST)
 
@@ -57,7 +57,7 @@ source_img = None
 
 if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
-        "Choose an image...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
+        "Выберите изображение...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
     col1, col2 = st.columns(2)
 
