@@ -92,6 +92,7 @@ if source_radio == settings.IMAGE:
                 st.image(res_plotted, caption='Detected Image',
                          use_column_width=True)
                 try:
+                    st.write(helper.tags_from_yolo(res))
                     with st.expander("Detection Results"):
                         for box in boxes:
                             st.write(box.data)
