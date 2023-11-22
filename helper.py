@@ -116,6 +116,6 @@ def tags_from_yolo(results):
     
     detected_classes_num = boxes.cls.unique().tolist()
     classes_det = []
-    for i in detected_classes:
+    for i in detected_classes_num:
         classes_det.append(classes[i])
     return classes_det
