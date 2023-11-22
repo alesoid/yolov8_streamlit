@@ -23,7 +23,7 @@ SOURCES_LIST = [IMAGE, VIDEO]
 # Images config
 IMAGES_DIR = ROOT / 'images'
 DEFAULT_IMAGE = IMAGES_DIR / 'image_1.jpg'
-DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'image_2.jpg'
+DEFAULT_DETECT_IMAGE = IMAGES_DIR / 'image_detected.jpg'
 
 # Videos config
 VIDEO_DIR = ROOT / 'video'
