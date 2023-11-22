@@ -77,7 +77,7 @@ def play_stored_video(conf, model):
     '''
     
     source_vid = st.sidebar.selectbox(
-        "Choose a video...", settings.VIDEOS_DICT.keys())
+        "Выберите видео...", settings.VIDEOS_DICT.keys())
 
     is_display_tracker, tracker = display_tracker_options()
 
