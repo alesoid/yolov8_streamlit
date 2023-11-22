@@ -47,7 +47,7 @@ def _display_detected_frames(conf, model, st_frame, image, is_display_tracking=N
     '''
 
     # Изменение размера изображения до стандартного размера
-    image = cv2.resize(image, (720, int(720*(9/16))))
+    image = cv2.resize(image, (300, int(300*(9/16))))
 
     # Отображение отслеживания объекта, если указано
     if is_display_tracking:
