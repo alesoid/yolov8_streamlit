@@ -60,18 +60,19 @@ if source_radio == settings.IMAGE:
         "Выберите изображение...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
     col1, col2, col3 = st.columns(3)
+    col1.write("This is column 1")
+    col2.write("This is column 2")
 
     with col1:
         try:
             if source_img is None:
                 default_image_path = str(settings.DEFAULT_IMAGE)
                 default_image = PIL.Image.open(default_image_path)
-                st.image(default_image_path, caption="Default image",
-                         use_column_width=True)
+                st.image(default_image_path, caption="Default image", use_column_width=True)
             else:
                 uploaded_image = PIL.Image.open(source_img)
-                st.image(source_img, caption="Uploaded Image",
-                         use_column_width=True)
+                st.image(source_img, caption="Uploaded Image", use_column_width=True)
+        
         except Exception as ex:
             st.error("Error occurred while opening the image.")
             st.error(ex)
@@ -79,20 +80,20 @@ if source_radio == settings.IMAGE:
     with col2:
         if source_img is None:
             default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
-            default_detected_image = PIL.Image.open(
-                default_detected_image_path)
-            st.image(default_detected_image_path, caption='Detected Image',
-                     use_column_width=True)
+            default_detected_image = PIL.Image.open(default_detected_image_path)
+            st.image(default_detected_image_path, caption='Detected Image',use_column_width=True)
         else:
             if st.sidebar.button('Запустить распознавание'):
                 res = model.predict(uploaded_image,
                                     conf=confidence)
                 boxes = res[0].boxes
-                res_plotted = res[0].plot() #[:, :, ::-1]
+                res_plotted = res[0].plot()[:, :, ::-1]
                 st.image(res_plotted, caption='Detected Image',
                          use_column_width=True)
                 with col3:
-                    st.write(helper.tags_from_yolo(res))
+                    tags_list = helper.tags_from_yolo(res)
+                    for i in tags_list:
+                        st.write(i)
                     try:
                         with st.expander("Detection Results"):
                             for box in boxes:
