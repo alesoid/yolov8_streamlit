@@ -59,7 +59,7 @@ if source_radio == settings.IMAGE:
     source_img = st.sidebar.file_uploader(
         "Выберите изображение...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     with col1:
         try:
@@ -71,7 +71,7 @@ if source_radio == settings.IMAGE:
             else:
                 uploaded_image = PIL.Image.open(source_img)
                 st.image(source_img, caption="Uploaded Image",
-                         use_column_width=True)
+                         width=50)
         except Exception as ex:
             st.error("Error occurred while opening the image.")
             st.error(ex)
@@ -82,7 +82,7 @@ if source_radio == settings.IMAGE:
             default_detected_image = PIL.Image.open(
                 default_detected_image_path)
             st.image(default_detected_image_path, caption='Detected Image',
-                     use_column_width=True)
+                     width=50)
         else:
             if st.sidebar.button('Запустить распознавание'):
                 res = model.predict(uploaded_image,
@@ -99,6 +99,22 @@ if source_radio == settings.IMAGE:
                 except Exception as ex:
                     # st.write(ex)
                     st.write("No image is uploaded yet!")
+
+
+    with col3:
+        if st.sidebar.button('Запустить распознавание'):
+            try:
+                res = model.predict(uploaded_image,
+                                    conf=confidence)
+                boxes = res[0].boxes
+                res_plotted = res[0].plot() #[:, :, ::-1]
+                st.image(res_plotted, caption='Detected Image',
+                         use_column_width=True)
+                st.write(helper.tags_from_yolo(res))
+
+            except Exception as ex:
+                # st.write(ex)
+                st.write("No image is uploaded yet!")
 
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)
