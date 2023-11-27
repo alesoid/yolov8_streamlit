@@ -67,11 +67,11 @@ if source_radio == settings.IMAGE:
                 default_image_path = str(settings.DEFAULT_IMAGE)
                 default_image = PIL.Image.open(default_image_path)
                 st.image(default_image_path, caption="Default image",
-                         width=50)
+                         use_column_width=True)
             else:
                 uploaded_image = PIL.Image.open(source_img)
                 st.image(source_img, caption="Uploaded Image",
-                         width=50)
+                         use_column_width=True)
         except Exception as ex:
             st.error("Error occurred while opening the image.")
             st.error(ex)
@@ -91,30 +91,16 @@ if source_radio == settings.IMAGE:
                 res_plotted = res[0].plot() #[:, :, ::-1]
                 st.image(res_plotted, caption='Detected Image',
                          use_column_width=True)
-                st.write(helper.tags_from_yolo(res))
-                try:
-                    with st.expander("Detection Results"):
-                        for box in boxes:
-                            st.write(box.data)
-                except Exception as ex:
-                    # st.write(ex)
-                    st.write("No image is uploaded yet!")
+                with col3:
+                    st.write(helper.tags_from_yolo(res))
+                    try:
+                        with st.expander("Detection Results"):
+                            for box in boxes:
+                                st.write(box.data)
+                    except Exception as ex:
+                        # st.write(ex)
+                        st.write("No image is uploaded yet!")
 
-
-    with col3:
-        if st.sidebar.button('Запустить распознавание'):
-            try:
-                res = model.predict(uploaded_image,
-                                    conf=confidence)
-                boxes = res[0].boxes
-                res_plotted = res[0].plot() #[:, :, ::-1]
-                st.image(res_plotted, caption='Detected Image',
-                         use_column_width=True)
-                st.write(helper.tags_from_yolo(res))
-
-            except Exception as ex:
-                # st.write(ex)
-                st.write("No image is uploaded yet!")
 
 elif source_radio == settings.VIDEO:
     helper.play_stored_video(confidence, model)
