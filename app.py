@@ -60,8 +60,9 @@ if source_radio == settings.IMAGE:
         "Выберите изображение...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
     col1, col2, col3 = st.columns(3)
-    col1.write("This is column 1")
-    col2.write("This is column 2")
+    # col1.write("This is column 1")
+    # col2.write("This is column 2")
+    col3.write("Теги")
 
     with col1:
         try:
@@ -92,8 +93,8 @@ if source_radio == settings.IMAGE:
                          use_column_width=True)
                 with col3:
                     tags_list = helper.tags_from_yolo(res)
-                    for i in tags_list:
-                        st.write(i)
+                    for i, tags in enumerate(tags_list):
+                        st.write(i, tags)
                     try:
                         with st.expander("Detection Results"):
                             for box in boxes:
