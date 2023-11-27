@@ -82,7 +82,7 @@ if source_radio == settings.IMAGE:
             default_detected_image = PIL.Image.open(
                 default_detected_image_path)
             st.image(default_detected_image_path, caption='Detected Image',
-                     width=50)
+                     use_column_width=True)
         else:
             if st.sidebar.button('Запустить распознавание'):
                 res = model.predict(uploaded_image,
