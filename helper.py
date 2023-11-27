@@ -109,13 +109,28 @@ def play_stored_video(conf, model):
             st.sidebar.error("Error loading video: " + str(e))
 
 
+# def tags_from_yolo(results):
+#     for result in results:
+#         boxes = result.boxes  # Boxes object for bbox outputs
+#         classes = result.names
+    
+#     detected_classes_num = boxes.cls.unique().tolist()
+#     classes_det = []
+#     for i in detected_classes_num:
+#         classes_det.append(classes[i])
+#     return classes_det
+
 def tags_from_yolo(results):
+    detected_classes = []
     for result in results:
         boxes = result.boxes  # Boxes object for bbox outputs
         classes = result.names
-    
-    detected_classes_num = boxes.cls.unique().tolist()
+
+        detected_classes_0 = boxes.cls.unique().tolist()
+        detected_classes.extend(detected_classes_0)
+        
+    detected_classes = list(set(detected_classes))
     classes_det = []
-    for i in detected_classes_num:
+    for i in detected_classes:
         classes_det.append(classes[i])
     return classes_det
