@@ -96,13 +96,13 @@ if source_radio == settings.IMAGE:
                     tags_list = helper.tags_from_yolo(res)
                     for i, tags in enumerate(tags_list):
                         st.write(i, tags)
-                    try:
-                        with st.expander("Detection Results"):
-                            for box in boxes:
-                                st.write(box.data)
-                    except Exception as ex:
-                        # st.write(ex)
-                        st.write("No image is uploaded yet!")
+                    # try:
+                    #     with st.expander("Detection Results"):
+                    #         for box in boxes:
+                    #             st.write(box.data)
+                    # except Exception as ex:
+                    #     # st.write(ex)
+                    #     st.write("No image is uploaded yet!")
 
 
 elif source_radio == settings.VIDEO:
