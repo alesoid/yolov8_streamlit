@@ -36,7 +36,20 @@ VIDEOS_DICT = {
     'video_3': VIDEO_3_PATH,
 }
 
-# ML Model config
+# YOLO Model config
 MODEL_DIR = ROOT / 'weights'
 DETECTION_MODEL = MODEL_DIR / 'best.pt'
-SEGMENTATION_MODEL = MODEL_DIR / 'yolov8n-seg.pt'
+
+# CLIP Model config
+MODEL_CLIP = 'openai/clip-vit-large-patch14'
+
+# Classification tags dictionary
+CLASSES = {
+  'body' : ['skinny', 'athletic', 'plus size'],
+  'pose' : ['close up', 'front', 'back', 'lying down', 'full', 'upper body', 'selfy', 'on knees'],
+  'place' : ['apartment', 'bedroom', 'kitchen', 'bathroom', 'nature', 'sea', 'beach', 'office', 'public place', 'underwater'],
+  'style' : ['ordinary', 'bdsm', 'military', 'romantic', 'pin up', 'teens', 'fitness', 'art', 'cosplay', 'office_style'],
+  'style_02' : ['lace', 'transparent', 'black', 'red'],
+  'naked' : ['naked', 'half_naked', 'dressed', 'underwear'],
+  'color ' : ['grayscale', 'light', 'dark', 'color', 'semidarkness']
+           }

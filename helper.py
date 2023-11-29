@@ -4,12 +4,13 @@ import time
 import streamlit as st
 import cv2
 from pytube import YouTube
+from transformers import CLIPProcessor, CLIPModel
 
 # Импорт локальных модулей
 import settings
 
 
-# Функция загрузки предобученной модели
+# Функция загрузки предобученной модели YOLO
 def load_model(model_path):
     '''
     Функция загружает модель обнаружения объектов YOLO из указанного model_path.
@@ -134,3 +135,17 @@ def tags_from_yolo(results):
     for i in detected_classes:
         classes_det.append(classes[i])
     return classes_det
+
+
+# Функция загрузки предобученной модели классификации CLIP
+
+def load_clip(model_path_clip):
+    '''
+    Функция загружает модель и процессор для классификации.
+    Входные данные: наименование модели, наименование процессора.
+    Выходные данные: загруженные модель и процессор.
+    '''
+    model_clip = CLIPModel.from_pretrained(MODEL_CLIP)
+    processor_clip = CLIPProcessor.from_pretrained(MODEL_CLIP)
+    return model_clip, processor_clip
+

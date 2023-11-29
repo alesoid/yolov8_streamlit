@@ -17,18 +17,13 @@ st.set_page_config(
 )
 
 # Наименование
-st.title("Object Detection с использованием YOLOv8")
+st.title("Модель присвоения тегов на основе Object Detection и ZeroShot Classification")
 
 # Меню
 st.sidebar.header("Конфигурация")
 
-# Опции (будут активированы по мере добавления моделей)??
-# model_type = st.sidebar.radio(
-#     "Select Task", ['Detection', 'Segmentation'])
-
-# Порог детекции 
-confidence = float(st.sidebar.slider(
-    "Выберите порог детекции", 25, 100, 40)) / 100
+# Порог детекции для Object Detection
+confidence = float(st.sidebar.slider( "Выберите порог детекции", 25, 100, 40)) / 100
 
 # Selecting Detection Or Segmentation
 # if model_type == 'Detection':
@@ -38,9 +33,16 @@ model_path = Path(settings.DETECTION_MODEL)
 # elif model_type == 'Segmentation':
 #     model_path = Path(settings.SEGMENTATION_MODEL)
 
-# Загрузка предобученной модели
+# Загрузка предобученной модели YOLO
 try:
     model = helper.load_model(model_path)
+except Exception as ex:
+    st.error(f"Unable to load model. Check the specified path: {model_path}")
+    st.error(ex)
+
+# Загрузка предобученной модели и процессора CLIP
+try:
+    model_CLIP, processor_CLIP = helper.load_clip(settings.MODEL_CLIP)
 except Exception as ex:
     st.error(f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
@@ -53,17 +55,16 @@ source_radio = st.sidebar.radio(
 
 source_img = None
 
-# Если выбрано изображение
+# Если выбрано изображение (IMAGE)
 
 if source_radio == settings.IMAGE:
-    source_img = st.sidebar.file_uploader(
-        "Выберите изображение...", type=("jpg", "jpeg", "png", 'bmp', 'webp'))
+    source_img = st.sidebar.file_uploader("Выберите изображение...", 
+                                          type=("jpg", "jpeg", "png", 'bmp', 'webp'))
 
-    col1, col2, col3 = st.columns(3)
-    # col1.write("This is column 1")
-    # col2.write("This is column 2")
-    col3.write("Теги")
-
+    col1, col2, col3, col4 = st.columns(4)
+    col3.write("Теги object detection")
+    col4.write("Теги classification")
+    
     with col1:
         try:
             if source_img is None:
