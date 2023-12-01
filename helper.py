@@ -145,7 +145,7 @@ def load_clip(model_path_clip):
     Входные данные: наименование модели, наименование процессора.
     Выходные данные: загруженные модель и процессор.
     '''
-    model_clip = CLIPModel.from_pretrained(MODEL_CLIP)
-    processor_clip = CLIPProcessor.from_pretrained(MODEL_CLIP)
+    model_clip = CLIPModel.from_pretrained(settings.MODEL_CLIP)
+    processor_clip = CLIPProcessor.from_pretrained(settings.MODEL_CLIP)
     return model_clip, processor_clip
 
