@@ -109,23 +109,11 @@ if source_radio == settings.IMAGE:
                 probs = logits_per_image.softmax(dim=1)     # we can take the softmax to get the label probabilities
                 res = probs.tolist()
                 res_classif = res[0]
-                # print(i, key, res_classif)
-
-                # plt.barh(classification, res_classif)
-                # plt.show()
-
                 class_lst = []
-                #   for i, ver in enumerate(res_classif):
-                #     if ver >= 0.5:
-                #       class_lst.append(classification[i])
-                #   if class_lst == []:
                 max_v = np.argmax(res_classif)
-                print(max_v)
                 class_lst.append(classification[max_v])
-                print(class_lst)
                 classif_list.append(class_lst[0])
-
-            #   # print(class_lst)
+                
             for i, cl_tags in enumerate(classif_list):
                 st.write(i, cl_tags)
 
