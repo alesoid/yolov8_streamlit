@@ -4,6 +4,7 @@ import PIL
 
 # Сторонние библиотеки
 import streamlit as st
+import numpy as np
 
 # Локальные модули
 import settings
