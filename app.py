@@ -96,13 +96,38 @@ if source_radio == settings.IMAGE:
                     tags_list = helper.tags_from_yolo(res)
                     for i, tags in enumerate(tags_list):
                         st.write(i, tags)
-                    # try:
-                    #     with st.expander("Detection Results"):
-                    #         for box in boxes:
-                    #             st.write(box.data)
-                    # except Exception as ex:
-                    #     # st.write(ex)
-                    #     st.write("No image is uploaded yet!")
+
+    with col4:
+        if st.sidebar.button('Запустить распознавание'):
+            classif_list = []
+            classes = settings.CLASSES
+            for i , key in enumerate(classes):
+                classification = classes[key]
+                inputs = processor_CLIP(text=classification, images=uploaded_image, return_tensors="pt", padding=True)
+                outputs = model_CLIP(**inputs)
+                logits_per_image = outputs.logits_per_image # this is the image-text similarity score
+                probs = logits_per_image.softmax(dim=1)     # we can take the softmax to get the label probabilities
+                res = probs.tolist()
+                res_classif = res[0]
+                # print(i, key, res_classif)
+
+                # plt.barh(classification, res_classif)
+                # plt.show()
+
+                class_lst = []
+                #   for i, ver in enumerate(res_classif):
+                #     if ver >= 0.5:
+                #       class_lst.append(classification[i])
+                #   if class_lst == []:
+                max_v = np.argmax(res_classif)
+                print(max_v)
+                class_lst.append(classification[max_v])
+                print(class_lst)
+                classif_list.append(class_lst[0])
+
+            #   # print(class_lst)
+            for i, cl_tags in enumerate(classif_list):
+                st.write(i, cl_tags)
 
 
 elif source_radio == settings.VIDEO:
