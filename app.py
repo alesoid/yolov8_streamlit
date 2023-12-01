@@ -79,23 +79,23 @@ if source_radio == settings.IMAGE:
             st.error("Error occurred while opening the image.")
             st.error(ex)
 
-    with col2:
-        if source_img is None:
-            default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
-            default_detected_image = PIL.Image.open(default_detected_image_path)
-            st.image(default_detected_image_path, caption='Detected Image',use_column_width=True)
-        else:
-            if st.sidebar.button('Tags from yolo'):
-                res = model.predict(uploaded_image,
-                                    conf=confidence)
-                boxes = res[0].boxes
-                res_plotted = res[0].plot()[:, :, ::-1]
-                st.image(res_plotted, caption='Detected Image',
-                         use_column_width=True)
-                with col3:
-                    tags_list = helper.tags_from_yolo(res)
-                    for i, tags in enumerate(tags_list):
-                        st.write(i, tags)
+    # with col2:
+    #     if source_img is None:
+    #         default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
+    #         default_detected_image = PIL.Image.open(default_detected_image_path)
+    #         st.image(default_detected_image_path, caption='Detected Image',use_column_width=True)
+    #     else:
+    #         if st.sidebar.button('Tags from yolo'):
+    #             res = model.predict(uploaded_image,
+    #                                 conf=confidence)
+    #             boxes = res[0].boxes
+    #             res_plotted = res[0].plot()[:, :, ::-1]
+    #             st.image(res_plotted, caption='Detected Image',
+    #                      use_column_width=True)
+    #             with col3:
+    #                 tags_list = helper.tags_from_yolo(res)
+    #                 for i, tags in enumerate(tags_list):
+    #                     st.write(i, tags)
 
     with col4:
         if st.sidebar.button('tags from CLIP'):
