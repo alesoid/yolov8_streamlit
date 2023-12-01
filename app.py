@@ -80,43 +80,43 @@ if source_radio == settings.IMAGE:
             st.error("Error occurred while opening the image.")
             st.error(ex)
 
-    # with col2:
-    #     if source_img is None:
-    #         default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
-    #         default_detected_image = PIL.Image.open(default_detected_image_path)
-    #         st.image(default_detected_image_path, caption='Detected Image',use_column_width=True)
-    #     else:
-    #         if st.sidebar.button('Tags from yolo'):
-    #             res = model.predict(uploaded_image,
-    #                                 conf=confidence)
-    #             boxes = res[0].boxes
-    #             res_plotted = res[0].plot()[:, :, ::-1]
-    #             st.image(res_plotted, caption='Detected Image',
-    #                      use_column_width=True)
-    #             with col3:
-    #                 tags_list = helper.tags_from_yolo(res)
-    #                 for i, tags in enumerate(tags_list):
-    #                     st.write(i, tags)
+    with col2:
+        if source_img is None:
+            default_detected_image_path = str(settings.DEFAULT_DETECT_IMAGE)
+            default_detected_image = PIL.Image.open(default_detected_image_path)
+            st.image(default_detected_image_path, caption='Detected Image',use_column_width=True)
+        else:
+            if st.sidebar.button('Tags from yolo'):
+                res = model.predict(uploaded_image,
+                                    conf=confidence)
+                boxes = res[0].boxes
+                res_plotted = res[0].plot()[:, :, ::-1]
+                st.image(res_plotted, caption='Detected Image',
+                         use_column_width=True)
+                with col3:
+                    tags_list = helper.tags_from_yolo(res)
+                    for i, tags in enumerate(tags_list):
+                        st.write(i, tags)
 
-    with col4:
-        if st.sidebar.button('tags from CLIP'):
-            classif_list = []
-            classes = settings.CLASSES
-            for i , key in enumerate(classes):
-                classification = classes[key]
-                inputs = processor_CLIP(text=classification, images=uploaded_image, return_tensors="pt", padding=True)
-                outputs = model_CLIP(**inputs)
-                logits_per_image = outputs.logits_per_image # this is the image-text similarity score
-                probs = logits_per_image.softmax(dim=1)     # we can take the softmax to get the label probabilities
-                res = probs.tolist()
-                res_classif = res[0]
-                class_lst = []
-                max_v = np.argmax(res_classif)
-                class_lst.append(classification[max_v])
-                classif_list.append(class_lst[0])
+    # with col4:
+    #     if st.sidebar.button('tags from CLIP'):
+    #         classif_list = []
+    #         classes = settings.CLASSES
+    #         for i , key in enumerate(classes):
+    #             classification = classes[key]
+    #             inputs = processor_CLIP(text=classification, images=uploaded_image, return_tensors="pt", padding=True)
+    #             outputs = model_CLIP(**inputs)
+    #             logits_per_image = outputs.logits_per_image # this is the image-text similarity score
+    #             probs = logits_per_image.softmax(dim=1)     # we can take the softmax to get the label probabilities
+    #             res = probs.tolist()
+    #             res_classif = res[0]
+    #             class_lst = []
+    #             max_v = np.argmax(res_classif)
+    #             class_lst.append(classification[max_v])
+    #             classif_list.append(class_lst[0])
                 
-            for i, cl_tags in enumerate(classif_list):
-                st.write(i, cl_tags)
+    #         for i, cl_tags in enumerate(classif_list):
+    #             st.write(i, cl_tags)
 
 
 elif source_radio == settings.VIDEO:
