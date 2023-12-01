@@ -4,7 +4,7 @@ import time
 import streamlit as st
 import cv2
 from pytube import YouTube
-from transformers import CLIPProcessor, CLIPModel
+# from transformers import CLIPProcessor, CLIPModel
 
 # Импорт локальных модулей
 import settings
