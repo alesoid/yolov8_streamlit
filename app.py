@@ -42,11 +42,11 @@ except Exception as ex:
     st.error(ex)
 
 # Загрузка предобученной модели и процессора CLIP
-try:
-    model_CLIP, processor_CLIP = helper.load_clip(settings.MODEL_CLIP)
-except Exception as ex:
-    st.error(f"Unable to load model. Check the specified path: {model_path}")
-    st.error(ex)
+# try:
+#     model_CLIP, processor_CLIP = helper.load_clip(settings.MODEL_CLIP)
+# except Exception as ex:
+#     st.error(f"Unable to load model. Check the specified path: {model_path}")
+#     st.error(ex)
 
 
 # выбор единицы контента: изображения/видео 
